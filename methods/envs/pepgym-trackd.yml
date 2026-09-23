@@ -1,0 +1,23 @@
+# Track D (interaction) run environment — CPU-only (never touches the GPU; vllm-safe).
+# Recreate:  conda create -n pepgym-trackd python=3.11 && \
+#            conda run -n pepgym-trackd pip install torch --index-url https://download.pytorch.org/whl/cpu && \
+#            conda run -n pepgym-trackd pip install fair-esm scikit-learn pandas pyarrow tqdm
+name: pepgym-trackd
+channels: [conda-forge]
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - torch        # cu128 GPU build for ESM-2 ladder up to 15B (use --device cuda; or cpu)
+      - fair-esm     # ESM-2 protein language model (real PLM behind PepBAN/PepInter)
+      - scikit-learn # classifier heads + metrics
+      - transformers # ProtT5 (Rostlab/prot_t5_xl_uniref50)
+      - sentencepiece
+      - tiktoken
+      - protobuf
+      - pandas
+      - pyarrow
+      - tqdm
+# Verified (2026-06-30): torch 2.11.0+cu128 (Blackwell), fair-esm, scikit-learn 1.9.0.
+# ESM-C embeddings (esmc_300m/600m) run in the `cycesmfold2` env (evolutionaryscale `esm` 3.3.0)
+# via scripts/run/track_d/embed_esmc.py; outputs share the same cache so run_interaction.py reads them.

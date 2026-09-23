@@ -1,0 +1,26 @@
+UPLOAD THESE SIX AS SEPARATE FILES (not bundled):
+
+    README.md                    rendered on the record page
+    PepArena_scores.csv          Track A: one row per complex per cofolder
+    PepArena_docking.csv         Track B: one row per complex per program
+    PepArena_affinity.csv        Track C
+    PepArena_interaction.csv     Track D
+    peparena_v1.0_data.tar.gz    the payload
+
+The four CSVs preview in the browser on the record page; they are also inside the payload.
+
+METADATA
+    Title    PepArena: data, predictions, and analysis artifacts
+    Type     Dataset
+    Author   Bhargava, Yash (ORCID 0009-0002-4615-1448)
+             Bhargava Systems Research Inc.; Johns Hopkins University
+    Licence  CC-BY-4.0
+    Related  is supplement to    -> the PROTEINS article DOI, once assigned
+             is supplemented by  -> https://github.com/Bhargava-Systems-Research-Inc/PepArena
+
+AFTER
+    Zenodo mints two DOIs. Put the VERSION DOI in the paper, not the concept DOI.
+    Then paste it into the Data Availability Statement and rebuild.
+
+Upload from the machine that made the data, not a laptop:
+    yash@100.79.141.95:/12TBDrive1/mega_pep_bench/dist/zenodo_upload/

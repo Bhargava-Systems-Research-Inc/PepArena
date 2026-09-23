@@ -1,0 +1,27 @@
+# Curation / data-prep environment for PeptideGym.
+# Recreate with:  conda env create -f methods/envs/pepgym-curate.yml
+# (posebusters is pip-only; listed under pip below.)
+name: pepgym-curate
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - biopython      # PDB/mmCIF parsing, sequence utils
+  - gemmi          # fast mmCIF/PDB + structure ops
+  - rdkit          # peptide -> SMILES, cyclization/macrocycle detection
+  - pandas
+  - pyarrow        # parquet manifests
+  - numpy
+  - scipy          # interface contact KD-trees
+  - requests
+  - tqdm
+  - mmseqs2        # sequence clustering (receptor dedup / homology splits)
+  - foldseek       # structural clustering (binding-site dedup)
+  - dssp           # secondary structure (mkdssp 4.x)
+  - pip
+  - pip:
+      - posebusters   # chemical-validity checks (also used in eval)
+      - biotite       # secondary-structure annotation (P-SEA) for feature enrichment
+# Verified versions (2026-06-29): mmseqs 18.8cc5c, foldseek 10.941cd33,
+# mkdssp 4.6.1, biopython 1.87, gemmi 0.7.5, rdkit 2026.03.3, posebusters 0.6.5

@@ -1,0 +1,142 @@
+# --- Large / regenerable data: keep on disk, not in git ---
+# Raw downloads (PDB cifs, source dataset archives, model weights)
+data/raw/**
+!data/raw/.gitkeep
+# External cloned dataset repos
+data/external/**
+!data/external/.gitkeep
+# Prediction outputs / structures
+results/**
+!results/.gitkeep
+# Copyrighted paper PDFs from the literature pack (track metadata only)
+corpus/pdfs/**
+corpus/**/*.pdf
+
+# Curated structure files are large; track the manifests (parquet/csv) but not the PDBs
+data/curated/structures/**
+
+# Model weights, MSAs, caches
+**/weights/**
+**/*.pt
+**/*.pth
+**/*.ckpt
+msa_cache/**
+
+# --- Python / env cruft ---
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+*.egg-info/
+
+# --- OS ---
+.DS_Store
+
+# Track runs: large outputs (embeddings, predictions) on disk; keep metrics/leaderboards
+runs/**/cache/**
+runs/**/*.parquet
+runs/**/*.npz
+runs/**/*.pt
+!runs/**/metrics.json
+!runs/**/leaderboard.csv
+gmx_MMPBSA.log
+
+# Track A inputs: per-model input files are regenerable from prepare_inputs.py
+prediction_inputs/*/
+!prediction_inputs/README.md
+
+# Track A: prediction structures (large, regenerable) + MSAs
+# Track B/C: regenerable structures, decoys, caches (keep manifests/leaderboards/CSVs)
+runs/track_b/scoring/native/**
+runs/track_b/scoring/dockq_cache/**
+runs/track_b/fresh/inputs/**
+runs/track_b/fresh/haddock3/**
+runs/track_b/fresh/adcp/**
+runs/track_c/structures/**
+runs/track_a/predictions/**
+runs/track_a/inputs_canonical/**
+runs/track_a/_validate*/**
+
+runs/track_a/_*_batch/**
+runs/track_a/logs/**
+runs/track_a/_protenix_msa/**
+prediction_inputs/protenix_msa/**
+
+# ncAA CCD inputs (generated) - keep manifest only
+ncaa_ccd/af3/**
+ncaa_ccd/protenix/**
+ncaa_ccd/boltz2/**
+ncaa_ccd/_userccd/**
+
+# Track B/C run phase (Aug 2026): predictions, grids, AMBER trajectories, MSAs.
+# Keep the scored CSVs and leaderboard JSONs next to them; drop the bulk.
+runs/track_c/boltz2_affinity/**
+!runs/track_c/boltz2_affinity/*_leaderboard.json
+!runs/track_c/boltz2_affinity/*_vs_measured.csv
+runs/track_c/mmgbsa/**
+runs/track_b/fresh/_scored_cache/**
+runs/track_a/predictions_ncaa/**
+runs/track_a/_af3_zips/**
+runs/track_a/_protenix_ft/**
+ncaa_ccd/_msa/**
+ncaa_ccd/*_msa/**
+runs/track_b/fresh/unidock/**
+runs/ram_guard.log
+dist/**
+
+# RAPiDock + PepScorer run phase (Sep 2026): pose bulk and third-party source trees.
+methods/external/**
+runs/track_b/fresh/rapidock/**
+!runs/track_b/fresh/rapidock/*.json
+runs/track_b/pepscorer/**
+!runs/track_b/pepscorer/STATUS.md
+!runs/track_b/pepscorer/missing_feature_ablation.csv
+!runs/track_b/pepscorer/missing_feature_ablation.json
+
+# E5 zero-shot cofolding (Track D): MSAs, YAMLs and structures are bulk; keep the sample
+# definition and the scored result so the run is reproducible from the repo alone.
+runs/track_d/e5_zeroshot/**
+!runs/track_d/e5_zeroshot/targets.csv
+!runs/track_d/e5_zeroshot/e5_confidence.csv
+!runs/track_d/e5_zeroshot/e5_zeroshot.json
+
+# The manuscript is a separate nested repo -- never track it from the parent.
+manuscript/
+
+# Prep logs for E5 (the ColabFold fetch is chatty and reproducible).
+runs/track_d/*.log
+
+# AlphaFold Server result archives: large, and the unpacked CIFs are what we use
+runs/track_a/_af3_newly_eligible/zips/
+
+# Superseded pre-audit docking runs: kept on disk for comparison, too large for git
+runs/track_b/fresh/*_preaudit/**
+
+# Working artifacts that belong in the Zenodo deposit or nowhere, not in a clone.
+# These were tracked and made the repo 1.18 GiB; GitHub warns above 1 GB. Each is either a
+# docking working directory whose per-pose metrics are already tabulated, a derived copy of an
+# alignment that exists once elsewhere, or a fetch cache. Ignoring them does not delete the
+# local files, and does not shrink history - see docs/PROGRESS.md.
+runs/track_b/control/adcp/**
+runs/track_a/_hf3_msa/**
+runs/track_a/_chai_msa/**
+runs/curate/detector_specificity/cif/**
+runs/track_c/boltz2_affinity_v2_batch/**
+
+
+# ---- Not in the public repo -------------------------------------------------------------
+# These stay on disk and go to the Zenodo deposit instead. The repo is inputs + method
+# wrappers + scoring code + scripts + README; results and working artifacts are the deposit's
+# job. runs/ alone was 18 MB and 672 files of result rows that PepArena_scores.csv summarises.
+runs/
+docs/
+corpus/
+leaderboard/
+provenance/
+ncaa_ccd/
+analysis/
+results/
+paper/
+eval/
+dist/
+manuscript/
